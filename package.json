@@ -1,0 +1,9 @@
+{
+	"name": "tree",
+	"version": "0.0.1",
+	"repo": "sciascid/tree",
+	"description": "Convenient wrapper around sys/tree.h.",
+	"keywords": ["tree", "red-black", "splay", "container"],
+	"license": "BSD",
+	"src": ["tree.h", "sys_tree.h"]
+}
