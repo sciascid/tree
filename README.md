@@ -51,11 +51,22 @@ Same as above, except that the macros are ```SPLAY_ENTRY()``` and ```SPLAYTREE_D
 
 #### tree\_destroy\_*type*(struct *name* \*t, struct *type* \*e);
 
+#### tree\_each(*head*,  *type*, *iter*, *block*);
+
+```c
+struct tree t;
+tree_each(&t, node, n, {
+    printf("%d", n->key);
+});
+```
+
+#### tree\_each\_safe(*head*,  *type*, *iter*, *block*);
+
 
 ## Example
 
 The following program reads lines from ```stdin```, inserts them into a
-red-black tree, and on ```EOF``` prints them to ```stdout``` in-order.
+red-black tree, and on ```EOF``` prints them to ```stdout``` in order.
 
 ```c
 #include "tree.h"
