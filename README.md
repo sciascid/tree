@@ -7,15 +7,18 @@ A wrapper around sys/tree.h.
 
 ### Red-black trees
 
-Macro ```RBTREE_DEFINE(name, type, field, cmp)``` defines a red-black tree with type *name* and its operations.
-*type* is the name of the structure that represents the nodes of the tree, and are linked through a user defined
-field *field*. Finally, *cmp* is a function pointer of type ```int (*cmp)(struct type*)```.
+Macro ```RBTREE_DEFINE(name, type, field, cmp)``` defines a red-black tree 
+with type *name* and its operations. *type* is the name of the structure that 
+represents the nodes of the tree, and are linked through a user defined field 
+*field*. Finally, *cmp* is a function pointer of type 
+```int (*cmp)(struct type*)```.
 
-Macro ```RB_ENTRY(type)``` defines a structure that contains the links to the left, right and parent nodes.
+Macro ```RB_ENTRY(type)``` defines a structure that contains the links to the 
+left, right and parent nodes.
 
 The example below shows how to declare a red-black tree containing integer keys.
 
-```
+```c
 struct node {
     int key;
     RB_ENTRY(node) entry;
@@ -25,7 +28,6 @@ int node_cmp(struct node* n);
 RBTREE_DEFINE(tree, node, entry, cmp);
 ```
 
-
 ### Splay trees
 
 Same as above, except that the macros are ```SPLAY_ENTRY()``` and ```SPLAYTREE_DEFINE()```.
@@ -33,7 +35,7 @@ Same as above, except that the macros are ```SPLAY_ENTRY()``` and ```SPLAYTREE_D
 
 ### API
 
-#### tree_init(struct *name* *t);
+#### tree\_init\_*type*(struct *name* \*t);
 
 #### tree\_insert\_*type*(struct *name* \*t, struct *type* \*e);
 
@@ -101,20 +103,20 @@ main(int argc, char const* argv[])
     struct tree t;
     size_t len = 0;
     char* line = NULL;
-    
-    tree_init(&t);
-    
+
+    tree_init_node(&t);
+
     while (getline(&line, &len, stdin) != -1) {
         struct node query = { line };
         if (!tree_find_node(&t, &query))
             tree_insert_node(&t, node_new(line));
     }
-    
+
     printf("Sorted lines:\n");
     tree_each(&t, node, n, {
         printf("%s", n->line);
     });
-    
+
     return 0;
 }
 ```
