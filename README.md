@@ -1,7 +1,56 @@
-tree
+Tree
 ====
 
 A wrapper around sys/tree.h.
+
+## Usage
+
+### Red-black trees
+
+Macro ```RBTREE_DEFINE(name, type, field, cmp)``` defines a red-black tree with type *name* and its operations.
+*type* is the name of the structure that represents the nodes of the tree, and are linked through a user defined
+field *field*. Finally, *cmp* is a function pointer of type ```int (*cmp)(struct type*)```.
+
+Macro ```RB_ENTRY(type)``` defines a structure that contains the links to the left, right and parent nodes.
+
+The example below shows how to declare a red-black tree containing integer keys.
+
+```
+struct node {
+    int key;
+    RB_ENTRY(node) entry;
+};
+
+int node_cmp(struct node* n);
+RBTREE_DEFINE(tree, node, entry, cmp);
+```
+
+
+### Splay trees
+
+Same as above, except that the macros are ```SPLAY_ENTRY()``` and ```SPLAYTREE_DEFINE()```.
+
+
+### API
+
+#### tree_init(struct *name* *t);
+
+#### tree\_insert\_*type*(struct *name* \*t, struct *type* \*e);
+
+#### tree\_remove\_*type*(struct *name* \*t, struct *type* \*e);
+
+#### tree\_find\_*type*(struct *name* \*t, struct *type* \*e);
+
+#### tree\_min\_*type*(struct *name* \*t);
+
+#### tree\_max\_*type*(struct *name* \*t);
+
+#### tree\_next\_*type*(struct *name* \*t, struct *type* \*e);
+
+#### tree\_apply\_*type*(struct *name* \*t, struct *type* \*e);
+
+#### tree\_destroy\_*type*(struct *name* \*t, struct *type* \*e);
+
 
 ## Example
 
@@ -10,9 +59,6 @@ red-black tree, and on ```EOF``` prints them to ```stdout``` in-order.
 
 ```c
 #include "tree.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 
 struct node {
     char* line;
