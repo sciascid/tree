@@ -34,7 +34,7 @@ main(int argc, char const* argv[])
     size_t len = 0;
     char* line = NULL;
     
-    tree_init(&t);
+    tree_init_node(&t);
     
     while (getline(&line, &len, stdin) != -1) {
         struct node query = { line };

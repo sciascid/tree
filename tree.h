@@ -46,7 +46,7 @@
     TREE##_PROTOTYPE_STATIC(name, type, field, cmp);                        \
     TREE##_GENERATE_STATIC(name, type, field, cmp);                         \
     attr void                                                               \
-    tree_init(struct name* t)                                               \
+    tree_init_##type(struct name* t)                                        \
     {                                                                       \
         TREE##_INIT(t);                                                     \
     }                                                                       \
