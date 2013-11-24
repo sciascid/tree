@@ -33,6 +33,10 @@
  *  A wrapper around BSD's sys/tree.h.
  */
 
+#ifdef __GNUC__
+#define __unused __attribute__((unused))
+#endif
+
 #include "sys_tree.h"
 
 #define RBTREE_DEFINE(name, type, field, cmp) \
