@@ -35,25 +35,80 @@ Same as above, except that the macros are ```SPLAY_ENTRY()``` and ```SPLAYTREE_D
 
 ### API
 
-#### tree\_init\_*type*(struct *name* \*t);
+```RBTREE_DEFINE(tree, node, entry, cmp)``` or the equivalent 
+```SPLAYTREE_DEFINE``` generate the following API:
 
-#### tree\_insert\_*type*(struct *name* \*t, struct *type* \*e);
+```c
+void tree_init_node(struct tree *t);
+```
 
-#### tree\_remove\_*type*(struct *name* \*t, struct *type* \*e);
+Initializes an empty tree ```t```.
+***
 
-#### tree\_find\_*type*(struct *name* \*t, struct *type* \*e);
+```c
+struct node* tree_insert_node(struct tree* t, struct node* e);
+```
 
-#### tree\_min\_*type*(struct *name* \*t);
+Inserts node ```e``` in tree ```t```.
+***
 
-#### tree\_max\_*type*(struct *name* \*t);
+```c
+struct node* tree_remove_node(struct tree *t, struct node *e);
+```
 
-#### tree\_next\_*type*(struct *name* \*t, struct *type* \*e);
+Removes the first node in tree ```t```, that matches node ```e```, according 
+to the comparator function. Returns the removed node, or ```NULL```.
+***
 
-#### tree\_apply\_*type*(struct *name* \*t, struct *type* \*e);
+```c 
+struct node* tree_find_node(struct tree* t, struct node* e);
+```
 
-#### tree\_destroy\_*type*(struct *name* \*t, struct *type* \*e);
+Returns a pointer to the first node that matches ```e```, or ```NULL```.
+***    
 
-#### tree\_each(*head*,  *type*, *iter*, *block*);
+```c
+struct node* tree_min_node(struct tree* t);
+```
+
+Returns the smallest node in ```t```, or ```NULL``` if the ```t``` is empty.
+***
+
+
+```c
+struct node* tree_max_node(struct tree* t);
+```
+
+Returns the largest node in ```t```, or ```NULL``` if the ```t``` is empty.
+***
+
+```c 
+struct node* tree_next_node(struct tree* t, struct node* e);
+```
+
+Returns the next node in tree ```t``` larger than ```e```, or ```NULL```.
+***
+
+```c
+void tree_apply_node(struct tree* t, void(*cb)(struct node*));
+```
+
+Calls the given function ```cb``` on every node in tree ```t```.
+***
+
+```c
+void tree_destroy_node(struct tree* t, void(*free_cb)(struct node*));
+```
+
+Removes all nodes in the given tree ```t``` and frees their memory by calling
+the given function ```free_cb```.
+***
+
+```c 
+void tree_each(name, type, iter, block);
+```
+
+```tree_each``` is a macro that iterates over all nodes in the tree.
 
 ```c
 struct tree t;
@@ -61,8 +116,13 @@ tree_each(&t, node, n, {
     printf("%d", n->key);
 });
 ```
+***
 
-#### tree\_each\_safe(*head*,  *type*, *iter*, *block*);
+```c
+void tree_each_safe(name, type, iter, block);
+```
+Same as ```tree_each```, except that it is same to remove node ```iter``` from
+the tree while iterating.
 
 
 ## Example
