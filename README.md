@@ -121,7 +121,7 @@ tree_each(&t, node, n, {
 ```c
 void tree_each_safe(name, type, iter, block);
 ```
-Same as ```tree_each```, except that it is same to remove node ```iter``` from
+Same as ```tree_each```, except that it is safe to remove node ```iter``` from
 the tree while iterating.
 
 
