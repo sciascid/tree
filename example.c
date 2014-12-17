@@ -8,9 +8,7 @@ struct node {
     RB_ENTRY(node) entry;
 };
 
-struct node* node_new(char* string);
 int node_cmp(struct node* a, struct node* b);
-
 RBTREE_DEFINE(tree, node, entry, node_cmp);
 
 struct node*
@@ -19,6 +17,13 @@ node_new(char* line)
     struct node* n = calloc(1, sizeof(struct node));
     n->line = strdup(line);
     return n;
+}
+
+void
+node_free(struct node* node)
+{
+    free(node->line);
+    free(node);
 }
 
 int
@@ -47,5 +52,6 @@ main(int argc, char const* argv[])
         printf("%s", n->line);
     });
     
+    tree_destroy_node(&t, node_free);
     return 0;
 }
